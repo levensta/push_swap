@@ -1,0 +1,6 @@
+[submodule "libbdlst"]
+	path = libbdlst
+	url = https://github.com/levensta/libbdlst.git
+[submodule "libft"]
+	path = libft
+	url = https://github.com/levensta/libft.git
