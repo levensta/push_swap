@@ -33,6 +33,8 @@ void	implement_instruction(char *command, t_blst **list_a, t_blst **list_b)
 		swap(list_a);
 		swap(list_b);
 	}
+	lst_indexing(*list_a);
+	lst_indexing(*list_b);
 	ft_putendl_fd(command, STDOUT_FILENO);
 }
 

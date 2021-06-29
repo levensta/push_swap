@@ -2,7 +2,6 @@
 
 void	error_print(char *error_message)
 {
-	ft_putendl_fd("Error", STDERR_FILENO);
 	ft_putendl_fd(error_message, STDERR_FILENO);
 	exit(-1);
 }
@@ -63,13 +62,13 @@ int	compare_lst(t_blst *a, t_blst *b)
 	return (compare_elements(a->data, b->data));
 }
 
-t_arg	*get_data(void *data)
-{
-	t_arg	*element;
+// t_arg	*get_data(void *data)
+// {
+// 	t_arg	*element;
 
-	element = (t_arg *)data;
-	return (element);
-}
+// 	element = (t_arg *)data;
+// 	return (element);
+// }
 
 t_blst	*bd_lstfind2(t_blst *lst, void *data, int (*comp)())
 {

@@ -1,5 +1,5 @@
 #include "push_swap.h"
-
+#include <limits.h>
 int	is_valid_num(char *str)
 {
 	int	i;
@@ -9,6 +9,9 @@ int	is_valid_num(char *str)
 		i++;
 	if (str[i] == '+' || str[i] == '-')
 		i++;
+	printf("%s\n", &str[i]);
+	if (ft_strlen(&str[i]) >= 10 && ft_atoi(str) < INT32_MAX)
+		error_print("Invalid argument");
 	while (str[i])
 	{
 		if (!ft_isdigit(str[i]))
@@ -18,14 +21,14 @@ int	is_valid_num(char *str)
 	return (1);
 }
 
-void	lst_indexing(t_blst **lst)
+void	lst_indexing(t_blst *lst)
 {
 	int		i;
 	t_blst	*tmp;
 	t_arg	*element;
 
 	i = 0;
-	tmp = *lst;
+	tmp = lst;
 	while (tmp)
 	{
 		element = (t_arg *)tmp->data;
@@ -44,7 +47,7 @@ void	initialize(t_blst **list_a, t_blst **list_sort, int argc, char **argv)
 	t_arg	*element_sort;
 
 	i = 0;
-	if (argc < 3)
+	if (argc < 2)
 		error_print("Please enter more than one argument");
 	while (argv[i])
 	{
@@ -63,6 +66,6 @@ void	initialize(t_blst **list_a, t_blst **list_sort, int argc, char **argv)
 		bd_lstpush_sort(list_sort, new_sort, &compare_lst);
 		i++;
 	}
-	lst_indexing(list_a);
-	lst_indexing(list_sort);
+	lst_indexing(*list_a);
+	lst_indexing(*list_sort);
 }
