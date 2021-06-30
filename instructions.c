@@ -13,11 +13,11 @@ void	implement_instruction(char *command, t_blst **list_a, t_blst **list_b)
 	else if (!ft_strcmp(command, "ra"))
 		rotate(list_a);
 	else if (!ft_strcmp(command, "rb"))
-		rotate(list_a);
+		rotate(list_b);
 	else if (!ft_strcmp(command, "rra"))
 		rrotate(list_a);
 	else if (!ft_strcmp(command, "rrb"))
-		rrotate(list_a);
+		rrotate(list_b);
 	else if (!ft_strcmp(command, "rrr"))
 	{
 		rrotate(list_a);

@@ -47,7 +47,7 @@ void	print_element(void *data)
 	}
 }
 
-int	compare_elements(void *a, void *b)
+int	cmp_elements(void *a, void *b)
 {
 	t_arg	*element_a;
 	t_arg	*element_b;
@@ -56,19 +56,6 @@ int	compare_elements(void *a, void *b)
 	element_b = (t_arg *)b;
 	return (element_a->value - element_b->value);
 }
-
-int	compare_lst(t_blst *a, t_blst *b)
-{
-	return (compare_elements(a->data, b->data));
-}
-
-// t_arg	*get_data(void *data)
-// {
-// 	t_arg	*element;
-
-// 	element = (t_arg *)data;
-// 	return (element);
-// }
 
 t_blst	*bd_lstfind2(t_blst *lst, void *data, int (*comp)())
 {
