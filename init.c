@@ -48,7 +48,8 @@ void	lst_indexing(t_blst *lst)
 	while (tmp)
 	{
 		element = (t_arg *)tmp->data;
-		element->index = i;
+		element->i = i;
+		element->rr = bd_lstsize(lst) - i;
 		tmp = tmp->next;
 		i++;
 	}

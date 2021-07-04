@@ -9,7 +9,8 @@
 typedef struct			s_arg
 {
 	int					value;
-	int					index;
+	int					i;
+	int					rr;
 }						t_arg;
 
 void	error_print(char *error_message);

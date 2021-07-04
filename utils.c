@@ -23,7 +23,7 @@ void	clear_element(void *elem)
 	t_arg	*element;
 	element = (t_arg*)elem;
 	element->value = 0;
-	element->index = 0;
+	element->i = 0;
 }
 
 void	*copy_element(void *elem)
@@ -41,7 +41,7 @@ void	print_element(void *data)
 	if (element)
 	{
 		if (element->value)
-			printf("%d\t|\t%d\n", element->value, element->index);
+			printf("%d\t|\t%d\n", element->value, element->i);
 		else
 			printf("<null>\n");
 	}
