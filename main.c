@@ -12,59 +12,33 @@ int	lst_is_sorted(t_blst *lst)
 	return (1);
 }
 
-t_blst	*lst_mediana(t_blst *list_sort)
+void	circular_rotation_a(int min_a, t_blst **list_a, t_blst **list_b)
 {
-	int	i;
-
-	if (list_sort)
+	if (min_a < 0)
 	{
-		i = (bd_lstsize(list_sort) / 2) - 1;
-		while (i--)
-			list_sort = list_sort->next;
+		while (min_a++)
+			implement_instruction("rra", list_a, list_b);
 	}
-	return (list_sort);
+	else if (min_a > 0)
+	{
+		while (min_a--)
+			implement_instruction("ra", list_a, list_b);
+	}
 }
 
-// void	minimal_rotation_b(t_blst **list_a, t_blst **list_b, t_blst *current)
-// {
-// 	int		i;
-// 	t_arg	*element;
-
-// 	element = (t_arg *)current->data;
-// 	if (element->i > element->rr)
-// 	{
-// 		i = element->rr;
-// 		while (i--)
-// 			implement_instruction("rrb", list_a, list_b);
-// 	}
-// 	else if (element->i <= element->rr)
-// 	{
-// 		i = element->i;
-// 		while (i--)
-// 			implement_instruction("rb", list_a, list_b);
-// 	}
-// }
-
-
-// void	minimal_rotation_a(t_blst **list_a, t_blst **list_b, t_blst *current)
-// {
-// 	int		i;
-// 	t_arg	*element;
-
-// 	element = (t_arg *)current->data;
-// 	if (element->i > element->rr)
-// 	{
-// 		i = element->rr;
-// 		while (i--)
-// 			implement_instruction("rra", list_a, list_b);
-// 	}
-// 	else if (element->i <= element->rr)
-// 	{
-// 		i = element->i;
-// 		while (i--)
-// 			implement_instruction("ra", list_a, list_b);
-// 	}
-// }
+void	circular_rotation_b(int min_b, t_blst **list_a, t_blst **list_b)
+{
+	if (min_b < 0)
+	{
+		while (min_b++)
+			implement_instruction("rra", list_a, list_b);
+	}
+	else if (min_b > 0)
+	{
+		while (min_b--)
+			implement_instruction("ra", list_a, list_b);
+	}
+}
 
 void	sorting_three(t_blst **list_a, t_blst **list_b)
 {
@@ -72,57 +46,24 @@ void	sorting_three(t_blst **list_a, t_blst **list_b)
 	{
 		if ((*list_a)->next && bd_lstcmp(*list_a, (*list_a)->next, cmp_elements) > 0)
 			implement_instruction("sa", list_a, list_b);
-		else if ((*list_a)->next && bd_lstcmp(*list_a, bd_lstlast(*list_a), cmp_elements) > 0)
-			implement_instruction("rra", list_a, list_b);
-	}
-}
-
-int	is_mmm(t_blst *lst, t_blst *max, t_blst *mid, t_blst *min)
-{
-	if	(!bd_lstcmp(lst, max, cmp_elements) \
-		|| !bd_lstcmp(lst, mid, cmp_elements) \
-		|| !bd_lstcmp(lst, min, cmp_elements))
-		return (1);
-	else
-		return (0);
-}
-
-void	push_all_b(t_blst **list_a, t_blst **list_b, t_blst **list_sort)
-{
-	int		i;
-	t_blst	*max;
-	t_blst	*min;
-	t_blst	*mid;
-
-	max = bd_lstmax(*list_sort, cmp_elements);
-	min = bd_lstmin(*list_sort, cmp_elements);
-	mid = lst_mediana(*list_sort);
-	i = (bd_lstsize(*list_sort) / 2) - 2;
-	while (i)
-	{
-		if	(is_mmm(*list_a, max, mid, min) || bd_lstcmp(*list_a, mid, cmp_elements) > 0)
-			implement_instruction("ra", list_a, list_b);
-		else if (bd_lstcmp(*list_a, mid, cmp_elements) < 0)
-		{
-			implement_instruction("pb", list_a, list_b);
-			i--;
-		}
-	}
-	while (bd_lstsize(*list_a) > 3)
-	{
-		if	(is_mmm(*list_a, max, mid, min))
-			implement_instruction("ra", list_a, list_b);
 		else
-			implement_instruction("pb", list_a, list_b);
+			implement_instruction("rra", list_a, list_b);
 	}
 }
 
 int	min_rotations(t_arg *element)
 {
 	if (element->i > element->rr)
-		return (element->rr);
-	else if (element->i <= element->rr)
+		return (element->rr * -1);
+	else
 		return (element->i);
+}
+
+int	abs(int	num)
+{
+	if (num < 0)
+		num *= -1;
+	return (num);
 }
 
 int	main(int argc, char **argv)
@@ -134,65 +75,103 @@ int	main(int argc, char **argv)
 	initialize(&list_a, &list_sort, argc, &(argv[1]));
 	if (argc == 4)
 		sorting_three(&list_a, &list_b);
-	push_all_b(&list_a, &list_b, &list_sort);
+	push_all(&list_a, &list_b, &list_sort);
 	sorting_three(&list_a, &list_b);
-
-	t_blst	*b;
-	b = list_b;
-	while (b)
+	while (list_b)
 	{
-		t_blst	*a;
-		int n = INT32_MAX;
+		t_blst	*b;
+		int	min_b;
+		int min_a;
+		b = list_b;
+		int		count = INT32_MAX;
+		while (b)
+		{
+			t_blst	*a;
 
-		a = list_a;
-		while (a->next)
-		{
-			a = a->next;
-			if (bd_lstcmp(b, a->prev, cmp_elements) > 0 && bd_lstcmp(b, a, cmp_elements) < 0)
+			a = list_a;
+			while (a->next)
 			{
-				if (n > min_rotations(a->data))
-					n = min_rotations(a->data);
-				break;
+				a = a->next;
+				if (bd_lstcmp(b, a->prev, cmp_elements) > 0 && bd_lstcmp(b, a, cmp_elements) < 0)
+				{
+					if (count > abs(min_rotations(a->data)) + abs(min_rotations(b->data)))
+					{
+						count = abs(min_rotations(a->data)) + abs(min_rotations(b->data));
+						min_a = min_rotations(a->data);
+						min_b = min_rotations(b->data);
+					}
+					break;
+				}
 			}
+			if (bd_lstcmp(b, a, cmp_elements) < 0 && bd_lstcmp(b, list_a, cmp_elements) > 0) // элемент b меньше последнего a и больше первого а
+			{
+				if (count > abs(min_rotations(a->data)) + abs(min_rotations(b->data)))
+				{
+					count = abs(min_rotations(a->data)) + abs(min_rotations(b->data));
+					min_a = min_rotations(a->data);
+					min_b = min_rotations(b->data);
+				}
+			}
+			b = b->next;
 		}
-		if (bd_lstcmp(b, a, cmp_elements) < 0 && bd_lstcmp(b, list_a, cmp_elements) > 0) // элемент b меньше последнего a и больше первого а
+		if (min_a < 0)
 		{
-			if (n > min_rotations(a->data))
-				n = min_rotations(a->data);
+			while (min_a++)
+				implement_instruction("rra", &list_a, &list_b);
 		}
+		else if (min_a > 0)
+		{
+			while (min_a--)
+				implement_instruction("ra", &list_a, &list_b);
+		}
+		//
+		if (min_b < 0)
+		{
+			while (min_b++)
+				implement_instruction("rrb", &list_a, &list_b);
+		}
+		else if (min_b > 0)
+		{
+			while (min_b--)
+				implement_instruction("rb", &list_a, &list_b);
+		}
+		implement_instruction("pa", &list_a, &list_b);
+	}
+	printf("---------\nlist_a\n");
+	bd_lstprint(list_a, print_element);
+	printf("---------\nlist_b\n");
+	bd_lstprint(list_b, print_element);
+	// !bd_lstcmp(bd_lstlast(list_a), bd_lstmax(list_a, cmp_elements), cmp_elements)
+	if (!lst_is_sorted(list_a))
+	{
+		t_blst	*min_el;
+		t_arg	*test;
+		test = (t_arg *)list_a->data;
+		min_el = bd_lstmin(list_a, cmp_elements);
+		int n = min_rotations(min_el->data);
+		if (n < 0)
+		{
+			while (n++)
+				implement_instruction("rra", &list_a, &list_b);
+		}
+		else if (n > 0)
+		{
+			while (n--)
+				implement_instruction("ra", &list_a, &list_b);
+		}
+	}
+	// if (bd_lstcmp(list_a, list_a->next, cmp_elements) > 0)
+	// 	implement_instruction("sa", &list_a, &list_b);
+	// printf("---------\nlist_a\n");
+	// bd_lstprint(list_a, print_element);
+	// printf("---------\nlist_b\n");
+	// bd_lstprint(list_b, print_element);
+	
 		// else if (bd_lstcmp(list_b, a, cmp_elements) > 0 && bd_lstcmp(list_b, list_a, cmp_elements) < 0) // элемент b больше последнего и меньше первого
 		// {
 		// 	// implement_instruction("pa", list_a, list_b);
 		// 	// break;
 		// 	n = 0;
 		// }
-	printf("---------\nlist_a\n");
-	bd_lstprint(list_a, print_element);
-	printf("---------\nlist_b\n");
-	bd_lstprint(list_b, print_element);
 	exit(0);
 }
-
-// 3 4 2
-
-// 3 7 4 8 5 2 9 6 10 1
-// 7 4 8 5 2 9 6 10 1
-// 4 8 5 2 9 6 10 1 7
-// 8 5 2 9 6 10 1 7
-// 5 2 9 6 10 1 7 8
-// 2 9 6 10 1 7 8 5
-// 9 6 10 1 7 8 5
-
-// while (b != NULL)
-// {
-// 	a = tmp;
-// 	while (a->next != NULL)
-// 	{
-// 		a = a->next;
-// 		if (b->content > a->prev->content && b->content < a->content)
-// 			count sumofrrrrr();
-// 		break;
-// 	}
-// 	if (b->content < a->сontent && b->content > tmp->content)
-// 			count sumofrrrrr();
-// }

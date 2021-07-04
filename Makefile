@@ -28,6 +28,7 @@ LBDLST_DIR	= libbdlst
 ######################### SOURCES ############################
 
 SOURCES			=	main.c \
+					push_all.c \
 					utils.c \
 					instructions.c \
 					init.c

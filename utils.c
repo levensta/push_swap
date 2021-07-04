@@ -18,14 +18,6 @@ t_arg 	*alloc_element(void)
 	return (element);
 }
 
-void	clear_element(void *elem)
-{
-	t_arg	*element;
-	element = (t_arg*)elem;
-	element->value = 0;
-	element->i = 0;
-}
-
 void	*copy_element(void *elem)
 {
 	t_arg	*element;
@@ -55,17 +47,4 @@ int	cmp_elements(void *a, void *b)
 	element_a = (t_arg *)a;
 	element_b = (t_arg *)b;
 	return (element_a->value - element_b->value);
-}
-
-t_blst	*bd_lstfind2(t_blst *lst, void *data, int (*comp)())
-{
-	while (lst)
-	{
-		if (comp(lst->data, data) == 0)
-		{
-			return (lst);
-		}
-		lst = lst->next;
-	}
-	return (NULL);
 }
