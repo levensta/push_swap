@@ -1,9 +1,9 @@
 #include "push_swap.h"
-#include <limits.h>
+
 int	is_valid_num(char *str)
 {
 	int	i;
-	int is_minus;
+	int	is_minus;
 
 	i = 0;
 	is_minus = 0;

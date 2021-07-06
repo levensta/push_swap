@@ -6,7 +6,6 @@ void	error_print(char *error_message)
 	exit(-1);
 }
 
-
 t_arg 	*alloc_element(void)
 {
 	t_arg	*element;
@@ -21,13 +20,14 @@ t_arg 	*alloc_element(void)
 void	*copy_element(void *elem)
 {
 	t_arg	*element;
-	element = (t_arg*)elem;
+
+	element = (t_arg *)elem;
 	return (element);
 }
 
 void	print_element(void *data)
 {
-	t_arg *element;
+	t_arg	*element;
 
 	element = (t_arg *)data;
 	if (element)

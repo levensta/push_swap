@@ -28,10 +28,11 @@ LBDLST_DIR	= libbdlst
 ######################### SOURCES ############################
 
 SOURCES			=	main.c \
+					init.c \
 					push_all.c \
-					utils.c \
 					instructions.c \
-					init.c
+					rotations.c \
+					utils.c
 
 HEADER_FILES	=	push_swap.h
 
