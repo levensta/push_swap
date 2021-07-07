@@ -17,6 +17,8 @@ static t_blst	*lst_mediana(t_blst *list_sort)
 	if (list_sort)
 	{
 		i = (bd_lstsize(list_sort) / 2) - 1;
+		if (bd_lstsize(list_sort) % 2)
+			i++;
 		while (i--)
 			list_sort = list_sort->next;
 	}
@@ -33,7 +35,7 @@ void	push_all(t_blst **list_a, t_blst **list_b, t_blst **list_sort)
 	max = bd_lstmax(*list_sort, cmp_elements);
 	min = bd_lstmin(*list_sort, cmp_elements);
 	mid = lst_mediana(*list_sort);
-	i = (bd_lstsize(*list_sort) / 2) - 2;
+	i = (bd_lstsize(*list_sort) - 3) / 2;
 	while (i)
 	{
 		if (is_mmm(*list_a, max, mid, min) || bd_lstcmp(*list_a, mid, cmp_elements) > 0)

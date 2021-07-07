@@ -29,9 +29,8 @@ int	main(int argc, char **argv)
 	t_blst	*list_sort;
 
 	initialize(&list_a, &list_sort, argc, &(argv[1]));
-	if (argc == 4)
-		sorting_three(&list_a, &list_b);
-	push_all(&list_a, &list_b, &list_sort);
+	if (argc > 4)
+		push_all(&list_a, &list_b, &list_sort);
 	sorting_three(&list_a, &list_b);
 	while (list_b)
 	{
@@ -78,11 +77,6 @@ int	main(int argc, char **argv)
 		circular_rotation_b(min_b, &list_a, &list_b);
 		implement_instruction("pa", &list_a, &list_b);
 	}
-	if (!lst_is_sorted(list_a))
-	{
-		t_blst	*min_el;
-		min_el = bd_lstmin(list_a, cmp_elements);
-		circular_rotation_a(min_rotations(min_el->data), &list_a, &list_b);
-	}
+	circular_rotation_a(min_rotations(bd_lstmin(list_a, cmp_elements)->data), &list_a, &list_b);
 	exit(0);
 }
