@@ -45,8 +45,8 @@ void	push(t_blst **dst, t_blst **src)
 
 	if (src && *src)
 	{
-		new = bd_lstcopy(*src, &copy_element);
-		bd_lstremove(src, *src, NULL);
+		new = bd_lstdup(*src, sizeof(t_arg));
+		bd_lstremove(src, *src, free);
 		if (dst && *dst)
 		{
 			new->next = *dst;
@@ -79,9 +79,9 @@ void	rotate(t_blst **lst)
 
 	if (lst && *lst && (*lst)->next)
 	{
-		first = bd_lstcopy(*lst, &copy_element);
+		first = bd_lstdup(*lst, sizeof(t_arg));
 		first->next = NULL;
-		bd_lstremove(lst, *lst, NULL);
+		bd_lstremove(lst, *lst, free);
 		bd_lstadd_back(lst, first);
 	}
 }
@@ -93,9 +93,9 @@ void	rrotate(t_blst **lst)
 
 	if (lst && *lst && (*lst)->next)
 	{
-		last = bd_lstcopy(bd_lstlast(*lst), &copy_element);
+		last = bd_lstdup(bd_lstlast(*lst), sizeof(t_arg));
 		last->next = *lst;
-		bd_lstremove(lst, bd_lstlast(*lst), NULL);
+		bd_lstremove(lst, bd_lstlast(*lst), free);
 		bd_lstadd_front(lst, last);
 	}
 }

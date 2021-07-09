@@ -24,9 +24,9 @@ void	sorting_three(t_blst **list_a, t_blst **list_b)
 
 int	main(int argc, char **argv)
 {
-	t_blst	*list_a;
-	t_blst	*list_b;
-	t_blst	*list_sort;
+	t_blst	*list_a = NULL;
+	t_blst	*list_b = NULL;
+	t_blst	*list_sort = NULL;
 
 	initialize(&list_a, &list_sort, argc, &(argv[1]));
 	if (argc > 4)
