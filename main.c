@@ -29,6 +29,8 @@ int	main(int argc, char **argv)
 	t_blst	*list_sort = NULL;
 
 	initialize(&list_a, &list_sort, argc, &(argv[1]));
+	if (lst_is_sorted(list_a))
+		exit(0);
 	if (argc > 4)
 		push_all(&list_a, &list_b, &list_sort);
 	sorting_three(&list_a, &list_b);
